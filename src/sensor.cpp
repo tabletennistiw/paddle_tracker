@@ -51,7 +51,6 @@ void sensorUpdate() {
 
   int16_t ax, ay, az, gx, gy, gz;
   mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-  int16_t t_raw = mpu.getTemperature();
 
   data.ax = ax / 16384.0f;
   data.ay = ay / 16384.0f;
@@ -67,7 +66,6 @@ void sensorUpdate() {
   data.pitch  = kalmanPitch.update(accel_pitch, gyro_y, dt);
   data.roll   = kalmanRoll.update(accel_roll,   gyro_x, dt);
   data.yaw   += gyro_z * dt;
-  data.temp   = (t_raw / 340.0f) + 36.53f;
 }
 
 SensorData sensorGet() { return data; }
